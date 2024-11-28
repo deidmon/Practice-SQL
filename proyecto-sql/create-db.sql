@@ -28,3 +28,11 @@ CREATE TABLE Marca (
     FOREIGN KEY (EmpleadoID) REFERENCES Empleado(EmpleadoID),
     FOREIGN KEY (Tipo) REFERENCES TipoMarca(Tipo)
 )
+
+CREATE TABLE LogFechasModifico(
+    LogID INT IDENTITY(1,1) PRIMARY KEY,
+    Fecha DATETIME,
+    Usuario VARCHAR(100),
+    EmpleadoID INT,
+    FechaAnterior DATETIME
+)

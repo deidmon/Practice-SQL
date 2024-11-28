@@ -60,3 +60,22 @@ END
 
 
 EXEC spActualizarHoras 1, '2024-11-24', 'EF', '2024-11-25 14:05:00'
+
+
+
+--modification logs
+CREATE TRIGGER trLogFechasModifico ON Marca AFTER UPDATE
+AS
+BEGIN
+    DECLARE @EmpleadoID INT, @FechaAnterior DATETIME;
+    SET @EmpleadoID = (
+        SELECT EmpleadoID 
+        FROM DELETED
+    )
+    SET @FechaAnterior (
+        SELECT Fecha
+        FROM DELETED
+    )
+    INSERT INTO LogFechasModifico(Fecha, Usuario, EmpleadoID, FechaAnterior)
+    VALUES (GETDATE(), SUSER_NAME(), @EmpleadoID, @FechaAnterior)
+END
