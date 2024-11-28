@@ -6,7 +6,7 @@ INNER JOIN TipoMarca T ON M.Tipo = T.Tipo
 
 --Calculating hours worked
 CREATE PROCEDURE spObtenerHorasTrabajadas
-    @FechaInicial DATE
+    @FechaInicial DATE,
     @FechaFinal DATE
 AS
 BEGIN
@@ -46,3 +46,17 @@ END
 
 
 EXEC spObtenerHorasTrabajadas '2024-11-10', '2024-11-28'
+
+--modify marks
+CREATE PROC spActualizarHoras
+    @EmpleadoID INT,
+    @Fecha DATE,
+    @TipoMarca VARCHAR(2)
+AS
+BEGIN
+    UPDATE Marca SET Fecha = @Fecha 
+    WHERE EmpleadoID = @EmpleadoID AND CONVERT(DATE, Fecha) = @Fecha AND TipoMarca = @TipoMarca
+END   
+
+
+EXEC spActualizarHoras 1, '2024-11-24', 'EF', '2024-11-25 14:05:00'
